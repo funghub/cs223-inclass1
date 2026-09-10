@@ -228,33 +228,3 @@ def binary_search_iterative(arr, target):
 
     return -1
 
-
-# ---------------------------------------------------------------------------
-# DEMO / SELF-TEST
-# ---------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    import random
-
-    sample = [random.randint(-50, 50) for _ in range(15)]
-    print("Original array: ", sample)
-
-    print("\n--- Merge Sort ---")
-    print("Recursive:", merge_sort_recursive(sample))
-    print("Iterative:", merge_sort_iterative(sample))
-
-    print("\n--- Quick Sort ---")
-    print("Recursive:", quick_sort_recursive(sample.copy()))
-    print("Iterative:", quick_sort_iterative(sample.copy()))
-
-    print("\n--- Binary Search ---")
-    sorted_arr = sorted(sample)
-    target = sorted_arr[len(sorted_arr) // 2]
-    print("Sorted array:", sorted_arr)
-    print(f"Searching for {target}")
-    print("Recursive index:", binary_search_recursive(sorted_arr, target))
-    print("Iterative index:", binary_search_iterative(sorted_arr, target))
-
-    print("\nSearching for a value not in the array (999):")
-    print("Recursive index:", binary_search_recursive(sorted_arr, 999))
-    print("Iterative index:", binary_search_iterative(sorted_arr, 999))
