@@ -54,31 +54,6 @@ def insertionSort(arr):
         arr[j + 1] = key
 
 
-
-
-#insert_sort_iter()
-
-
-
-def function(
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#def function()
-
-
 """
 Merge Sort, Quick Sort, and Binary Search
 Each algorithm is implemented in both a recursive and an iterative form.
