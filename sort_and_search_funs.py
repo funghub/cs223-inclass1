@@ -1,19 +1,40 @@
 
 def selection_sort_iter()
     
-asdfklasjdfl;jasd
-fas
-df
-as
-df
-as
-df
-sa
-df
-as
-df
-as
-df
 
-asd
 
+
+
+
+
+
+
+
+
+
+
+
+#selection_sort_iter()
+
+
+
+def function()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#def function()
