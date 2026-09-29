@@ -1,43 +1,79 @@
-def selection_sort_iter(arr):
-    n = len(arr)
-    for i in range(n - 1):
-      
-        # Assume the current position holds
-        # the minimum element
-        min_idx = i
-        
-        # Iterate through the unsorted portion
-        # to find the actual minimum
-        for j in range(i + 1, n):
-            if arr[j] < arr[min_idx]:
-              
-                # Update min_idx if a smaller element is found
-                min_idx = j
-        
-        # Move minimum element to its
-        # correct position
-        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+def selection_sort_iter(df, column, descending=False):
 
-def selection_sort_recursive(arr, start=0):
-    n = len(arr)
-    
-    # Base case: If the starting index reaches the end of the array
+    # Keep track of row positions
+    order = list(range(len(df)))
+
+    n = len(order)
+
+    for i in range(n - 1):
+
+        selected_idx = i
+
+        for j in range(i + 1, n):
+
+            current_value = df.iloc[order[j]][column]
+            selected_value = df.iloc[order[selected_idx]][column]
+
+            if descending:
+                if current_value > selected_value:
+                    selected_idx = j
+            else:
+                if current_value < selected_value:
+                    selected_idx = j
+
+        # Swap entire row positions
+        order[i], order[selected_idx] = (
+            order[selected_idx],
+            order[i]
+        )
+
+    # Return DataFrame in sorted row order
+    return df.iloc[order].copy()
+
+def selection_sort_recursive(
+    df,
+    column,
+    descending=False,
+    start=0,
+    order=None
+):
+
+    if order is None:
+        order = list(range(len(df)))
+
+    n = len(order)
+
+    # Base case
     if start >= n - 1:
-        return
-    
-    # Assume the current position holds the minimum element
-    min_idx = start
-    
-    # Iterate through the unsorted portion to find the actual minimum
+        return df.iloc[order].copy()
+
+    selected_idx = start
+
     for j in range(start + 1, n):
-        if arr[j] < arr[min_idx]:
-            min_idx = j
-    
-    # Move minimum element to its correct position
-    arr[start], arr[min_idx] = arr[min_idx], arr[start]
-    
-    # Recursively call the function for the next index
-    selection_sort_recursive(arr, start + 1)    
+
+        current_value = df.iloc[order[j]][column]
+        selected_value = df.iloc[order[selected_idx]][column]
+
+        if descending:
+            if current_value > selected_value:
+                selected_idx = j
+        else:
+            if current_value < selected_value:
+                selected_idx = j
+
+    # Swap entire row positions
+    order[start], order[selected_idx] = (
+        order[selected_idx],
+        order[start]
+    )
+
+    return selection_sort_recursive(
+        df,
+        column,
+        descending,
+        start + 1,
+        order
+    )
 
 # Function to sort array using insertion sort
 def insertionSort(arr):
