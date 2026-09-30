@@ -1,6 +1,6 @@
 import anndata as ad
 
-# from sort_and_search_funs import selection_sort_iter, selection_sort_recursive
+
 from sort_and_search_funs import * # use * to import all functions instead of just those two?
 
 from util_funs import timer_decorator
@@ -32,14 +32,14 @@ from util_funs import timer_decorator
 
 # Run Sort Experiment
 @timer_decorator
-def run_sort_experiment(df_original, mt_column, sort_func):
+def run_sort_experiment(df_original, sort_column, sort_func, descending):
     # Fresh copy of original unsorted DataFrame
     df = df_original.copy()
 
     return sort_func(
         df,
-        mt_column,
-        descending=True
+        sort_column,
+        descending=descending
     )
 
 
@@ -92,7 +92,8 @@ def main():
     
     # Run Recursive Selection Sort Experiment
     # sorted_df_rec_sel = run_selection_sort_rec(df_original, mt_column)
-    sorted_df_rec_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_recursive)
+    
+    sorted_df_rec_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_recursive, descending=True)
 
     # Run Recursive Merge Sort Experiment
 
@@ -107,7 +108,7 @@ def main():
 
     # Run Iterative Selection Sort Experiment
     # sorted_df_iter_selection = run_selection_sort_iter(df_original, mt_column)
-    sorted_df_iter_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_iter)
+    sorted_df_iter_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_iter, descending=True)
 
     # Run Iterative Merge Sort Experiment
     
