@@ -1,3 +1,5 @@
+# coding: utf-8 # <- This is an encoding declaration
+
 import anndata as ad
 
 
@@ -59,7 +61,7 @@ def run_sort_experiment(df_original, sort_column, sort_func, descending):
 '''
 def filter_mt_cells(
     anndata_obj,           # the ANNdata object
-    mt_exp_lvl_threshold)  # number between 0 and 1
+    mt_exp_lvl_threshold):  # number between 0 and 1
     # gene_exp_threshold):   # number between 0 and 2000
     
 
@@ -103,9 +105,7 @@ def main():
     # Run Recursive Insert Sort Experiment
     # sorted_df_rec_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_recursive)
     
-    # Run Recursive Selection Sort Experiment
-    # sorted_df_rec_sel = run_selection_sort_rec(df_original, mt_column)
-    
+    # Run Recursive Selection Sort Experiment  
     sorted_df_rec_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_recursive, descending=True)
 
     # Run Recursive Merge Sort Experiment
@@ -120,7 +120,6 @@ def main():
     # sorted_df_iter_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_iter)
 
     # Run Iterative Selection Sort Experiment
-    # sorted_df_iter_selection = run_selection_sort_iter(df_original, mt_column)
     sorted_df_iter_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_iter, descending=True)
 
     # Run Iterative Merge Sort Experiment
