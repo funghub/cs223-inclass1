@@ -59,7 +59,7 @@ def main():
     # Check summary stats for both columns to know what threshold to set
     print(adata.obs[["percent_mito", "n_genes"]].describe())
 
-    # # Specify the column to sort by
+    # Specify the column to sort by
     mt_column = df_original.columns[2]
 
     print("\nSorting by:", mt_column)

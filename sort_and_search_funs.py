@@ -77,7 +77,7 @@ def selection_sort_recursive(
 
 # Function to sort array using insertion sort iteratively
 # https://www.geeksforgeeks.org/dsa/insertion-sort-algorithm/
-def insertionSort_i(arr):
+def insertionSort_iter(arr):
     for i in range(1, len(arr)):
         key = arr[i]
         j = i - 1
@@ -91,7 +91,7 @@ def insertionSort_i(arr):
         arr[j + 1] = key
 
 # https://www.geeksforgeeks.org/dsa/recursive-insertion-sort/
-def insertionSort_r(arr,n):
+def insertionSort_recursive(arr,n):
     # base case
     if n<=1:
         return

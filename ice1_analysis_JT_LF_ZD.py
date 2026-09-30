@@ -1,34 +1,47 @@
 import anndata as ad
 
-from sort_and_search_funs import selection_sort_iter, selection_sort_recursive
-# from sort_and_search_funs import * # use * to import all functions instead of just those two?
+# from sort_and_search_funs import selection_sort_iter, selection_sort_recursive
+from sort_and_search_funs import * # use * to import all functions instead of just those two?
 
 from util_funs import timer_decorator
 
 
-# Iterative Selection Sort Experiment
+# # Recursive Selection Sort Experiment
+# @timer_decorator
+# def run_selection_sort_rec(df_original, mt_column):
+#     # Fresh copy of original unsorted DataFrame
+#     df = df_original.copy()
+
+#     return selection_sort_recursive(
+#         df,
+#         mt_column,
+#         descending=True
+#     )
+
+# # Iterative Selection Sort Experiment
+# @timer_decorator
+# def run_selection_sort_iter(df_original, mt_column):
+#     # Fresh copy of original unsorted DataFrame
+#     df = df_original.copy()
+
+#     return selection_sort_iter(
+#         df,
+#         mt_column,
+#         descending=True
+#     )
+
+# Run Sort Experiment
 @timer_decorator
-def run_selection_sort_iter(df_original, mt_column):
+def run_sort_experiment(df_original, mt_column, sort_func):
     # Fresh copy of original unsorted DataFrame
     df = df_original.copy()
 
-    return selection_sort_iter(
+    return sort_func(
         df,
         mt_column,
         descending=True
     )
 
-# Recursive Selection Sort Experiment
-@timer_decorator
-def run_selection_sort_rec(df_original, mt_column):
-    # Fresh copy of original unsorted DataFrame
-    df = df_original.copy()
-
-    return selection_sort_recursive(
-        df,
-        mt_column,
-        descending=True
-    )
 
 # Main
 def main():
@@ -62,6 +75,7 @@ def main():
 
         return anndata_obj_filtered
 
+    # 7b
     # Extract the DataFrame from the AnnData object
     df_original = adata.obs.copy()
 
@@ -70,27 +84,57 @@ def main():
 
     print("\nSorting by:", mt_column)
 
+    '''
+    Running Recursive Versions of Sort Algorithms
+    '''
+    # Run Recursive Insert Sort Experiment
+    # sorted_df_rec_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_recursive)
+    
+    # Run Recursive Selection Sort Experiment
+    # sorted_df_rec_sel = run_selection_sort_rec(df_original, mt_column)
+    sorted_df_rec_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_recursive)
+
+    # Run Recursive Merge Sort Experiment
+
+    # Run Recursive Quick Sort Experiment
+
+
+    '''
+    Running Iterative Versions of Sort Algorithms
+    '''
+    # Run Iterative Insert Sort Experiment
+    # sorted_df_iter_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_iter)
+
+    # Run Iterative Selection Sort Experiment
+    # sorted_df_iter_selection = run_selection_sort_iter(df_original, mt_column)
+    sorted_df_iter_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_iter)
+
+    # Run Iterative Merge Sort Experiment
+    
+    # Run Iterative Quick Sort Experiment
+    
+    
+
+
+
+
+
+
+    # 7c
     # using 7a function
     # calling the filtering function with the set values set: example
     percent_mito_threshold = 0.1 # filter to get those <= 0.1 % mito genes origin
     n_gene_threshold = 1500 # filter to get those >= 1500 genes expressed
     df_filtered = filter_mt_cells(adata, 
-                                  percent_mito_threshold, 
-                                  n_gene_threshold
-                                  ).obs.copy()
+                                    percent_mito_threshold, 
+                                    n_gene_threshold
+                                    ).obs.copy()
     
     # Validate if filtered correctly: dis has been validated
     # print(df_filtered.head())
     # print(f"percent_mito > {percent_mito_threshold} {(df_filtered["percent_mito"] > percent_mito_threshold).any()}")
     # print(f"n_genes < {n_gene_threshold} {(df_filtered["n_genes"] < n_gene_threshold).any()}")
-
-
-    # Run Iterative Selection Sort Experiment
-    sorted_df_iter = run_selection_sort_iter(df_original, mt_column)
-
-    # Run Recursive Selection Sort Experiment
-    sorted_df_rec = run_selection_sort_rec(df_original, mt_column)
-
+    
 
 if __name__ == "__main__":
     main()
