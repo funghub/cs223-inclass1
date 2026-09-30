@@ -38,6 +38,48 @@ def main():
     # Extract the DataFrame from the AnnData object
     df_original = adata.obs.copy()
 
+
+    def filter_mt_cells(
+        anndata_obj,           # the ANNdata object
+        mt_exp_lvl_threshold,  # number between 0 and 1
+        gene_exp_threshold):   # number between 0 and 2000
+        '''
+        Requirement for 7a.
+        "cells that exhibit a high level of mitochondrial gene expression are 
+        likely dead or dying cells, and the cell needs to be excluded from 
+        the analysis"
+
+        mt_exp_lvl_threshold: represents the percentage above which the 
+        corresponding cell entry is to be eliminated from further consideration
+        mitochontroal genes col3?
+
+        gene_exp_threshold: represents the gene expression level below which the 
+        corresponding cell entry is to be eliminated from further consideration
+        number of genes expresed in cells col2?
+        '''
+
+        # filtering of the anndata_obj
+        anndata_obj_filtered = anndata_obj[
+            (anndata_obj.obs["percent_mito"] <=  mt_exp_lvl_threshold) & 
+            (anndata_obj.obs["n_genes"] >=  gene_exp_threshold), :].copy()
+
+        return anndata_obj_filtered
+    
+    # calling the filtering function with the set values set: example
+    percent_mito_threshold = 0.1 # filter to get those <= 0.1 % mito genes origin
+    n_gene_threshold = 1500 # filter to get those >= 1500 genes expressed
+    df_filtered = filter_mt_cells(adata, 
+                                  percent_mito_threshold, 
+                                  n_gene_threshold
+                                  ).obs.copy()
+    
+    # Validate if filtered correctly: dis has been validated
+    # print(df_filtered.head())
+    # print(f"percent_mito > {percent_mito_threshold} {(df_filtered["percent_mito"] > percent_mito_threshold).any()}")
+    # print(f"n_genes < {n_gene_threshold} {(df_filtered["n_genes"] < n_gene_threshold).any()}")
+
+
+
     # Specify the column to sort by
     mt_column = df_original.columns[2]
 

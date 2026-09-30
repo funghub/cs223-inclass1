@@ -97,7 +97,7 @@ def insertionSort_r(arr,n):
         return
     
     # Sort first n-1 elements
-    insertionSortRecursive(arr,n-1)
+    insertionSort_r(arr,n-1)
     '''Insert last element at its correct position
         in sorted array.'''
     last = arr[n-1]
