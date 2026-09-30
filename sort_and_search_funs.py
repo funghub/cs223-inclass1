@@ -1,3 +1,5 @@
+import sys
+
 def selection_sort_iter(df, column, descending=False):
 
     # Keep track of row positions
@@ -261,3 +263,5 @@ def binary_search_iterative(arr, target):
 
     return -1
 
+if __name__ == "__main__":
+    print(f"{sys.argv[0]} : Is intended to be imported and not executed.")
