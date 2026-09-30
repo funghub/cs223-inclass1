@@ -60,9 +60,9 @@ def main():
     print(adata.obs[["percent_mito", "n_genes"]].describe())
 
     # # Specify the column to sort by
-    # mt_column = df_original.columns[2]
+    mt_column = df_original.columns[2]
 
-    # print("\nSorting by:", mt_column)
+    print("\nSorting by:", mt_column)
 
     # # Run Iterative Selection Sort Experiment
     # sorted_df_iter = run_selection_sort_iter(df_original, mt_column)

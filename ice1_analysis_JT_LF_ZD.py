@@ -35,10 +35,7 @@ def main():
     # Load the AnnData object
     adata = ad.read_h5ad("./data/pbmc_sample.h5ad")
 
-    # Extract the DataFrame from the AnnData object
-    df_original = adata.obs.copy()
-
-
+    # 7a
     def filter_mt_cells(
         anndata_obj,           # the ANNdata object
         mt_exp_lvl_threshold,  # number between 0 and 1
@@ -64,7 +61,16 @@ def main():
             (anndata_obj.obs["n_genes"] >=  gene_exp_threshold), :].copy()
 
         return anndata_obj_filtered
-    
+
+    # Extract the DataFrame from the AnnData object
+    df_original = adata.obs.copy()
+
+    # Specify the column to sort by
+    mt_column = df_original.columns[2]
+
+    print("\nSorting by:", mt_column)
+
+    # using 7a function
     # calling the filtering function with the set values set: example
     percent_mito_threshold = 0.1 # filter to get those <= 0.1 % mito genes origin
     n_gene_threshold = 1500 # filter to get those >= 1500 genes expressed
@@ -78,12 +84,6 @@ def main():
     # print(f"percent_mito > {percent_mito_threshold} {(df_filtered["percent_mito"] > percent_mito_threshold).any()}")
     # print(f"n_genes < {n_gene_threshold} {(df_filtered["n_genes"] < n_gene_threshold).any()}")
 
-
-
-    # Specify the column to sort by
-    mt_column = df_original.columns[2]
-
-    print("\nSorting by:", mt_column)
 
     # Run Iterative Selection Sort Experiment
     sorted_df_iter = run_selection_sort_iter(df_original, mt_column)
