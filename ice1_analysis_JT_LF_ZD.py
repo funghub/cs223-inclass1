@@ -1,6 +1,8 @@
 import anndata as ad
 
 from sort_and_search_funs import selection_sort_iter, selection_sort_recursive
+# from sort_and_search_funs import * # use * to import all functions instead of just those two?
+
 from util_funs import timer_decorator
 
 
@@ -31,7 +33,7 @@ def run_selection_sort_rec(df_original, mt_column):
 # Main
 def main():
     # Load the AnnData object
-    adata = ad.read_h5ad("pbmc_sample.h5ad")
+    adata = ad.read_h5ad("./data/pbmc_sample.h5ad")
 
     # Extract the DataFrame from the AnnData object
     df_original = adata.obs.copy()
