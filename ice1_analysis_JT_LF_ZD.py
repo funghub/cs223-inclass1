@@ -8,30 +8,6 @@ from sort_and_search_funs import * # use * to import all functions instead of ju
 from util_funs import timer_decorator
 
 
-# # Recursive Selection Sort Experiment
-# @timer_decorator
-# def run_selection_sort_rec(df_original, mt_column):
-#     # Fresh copy of original unsorted DataFrame
-#     df = df_original.copy()
-
-#     return selection_sort_recursive(
-#         df,
-#         mt_column,
-#         descending=True
-#     )
-
-# # Iterative Selection Sort Experiment
-# @timer_decorator
-# def run_selection_sort_iter(df_original, mt_column):
-#     # Fresh copy of original unsorted DataFrame
-#     df = df_original.copy()
-
-#     return selection_sort_iter(
-#         df,
-#         mt_column,
-#         descending=True
-#     )
-
 # Run Sort Experiment
 @timer_decorator
 def run_sort_experiment(df_original, sort_column, sort_func, descending):
