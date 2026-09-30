@@ -114,15 +114,13 @@ def main():
     # calling the filtering function with the set values set: example
     percent_mito_threshold = 0.1 # filter to get those <= 0.1 % mito genes origin
     n_gene_threshold = 1500 # filter to get those >= 1500 genes expressed
-    df_mit_filtered = filter_mt_cells(adata, 
-                                    percent_mito_threshold, 
-                                    # n_gene_threshold
-                                    ).obs.copy()
+    # df_mit_filtered = filter_mt_cells({your df}, 
+    #                                 percent_mito_threshold, 
+    #                                 ).obs.copy()
 
-    df_exp_filtered = filter_exp_cells(adata, 
-                                        # percent_mito_threshold, 
-                                        n_gene_threshold
-                                        ).obs.copy()
+    # df_exp_filtered = filter_exp_cells({your df}, 
+    #                                     # percent_mito_threshold, 
+    #                                     ).obs.copy()
     
     # Validate if filtered correctly: dis has been validated
     # print(df_filtered.head())
