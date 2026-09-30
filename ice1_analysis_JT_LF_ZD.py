@@ -36,28 +36,26 @@ def run_sort_experiment(df_original, sort_column, sort_func, descending):
     number of genes expresed in cells col2?
 '''
 def filter_mt_cells(
-    anndata_obj,           # the ANNdata object
+    df,           # the ANNdata object
     mt_exp_lvl_threshold):  # number between 0 and 1
     # gene_exp_threshold):   # number between 0 and 2000
     
 
-    # filtering of the anndata_obj
-    anndata_obj_filtered = anndata_obj[
-        (anndata_obj.obs["percent_mito"] <=  mt_exp_lvl_threshold), :].copy()
-
-    return anndata_obj_filtered
+    # filtering of the df
+    return df[
+        df["percent_mito"] <= mt_exp_lvl_threshold
+    ].copy()
 
 def filter_exp_cells(
-    anndata_obj,           # the ANNdata object
+    df,           # the ANNdata object
     # mt_exp_lvl_threshold,  # number between 0 and 1
     gene_exp_threshold):   # number between 0 and 2000
     
 
-    # filtering of the anndata_obj
-    anndata_obj_filtered = anndata_obj[
-        (anndata_obj.obs["n_genes"] >=  gene_exp_threshold), :].copy()
-
-    return anndata_obj_filtered
+    # filtering of the df
+    return df[
+        df["n_genes"] >= gene_exp_threshold
+    ].copy()
 
 
 # Main
@@ -65,6 +63,9 @@ def main():
     # Load the AnnData object
     adata = ad.read_h5ad("./data/pbmc_sample.h5ad")
 
+    percent_mito_threshold = 0.1 # filter to get those <= 0.1 % mito genes origin
+    
+    n_gene_threshold = 1500 # filter to get those >= 1500 genes expressed
 
     # 7b
     # Extract the DataFrame from the AnnData object
@@ -96,7 +97,7 @@ def main():
     # sorted_df_iter_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_iter)
 
     # Run Iterative Selection Sort Experiment
-    sorted_df_iter_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_iter, descending=True)
+    #sorted_df_iter_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_iter, descending=True)
 
     # Run Iterative Merge Sort Experiment
     
@@ -127,6 +128,11 @@ def main():
     # print(f"percent_mito > {percent_mito_threshold} {(df_filtered["percent_mito"] > percent_mito_threshold).any()}")
     # print(f"n_genes < {n_gene_threshold} {(df_filtered["n_genes"] < n_gene_threshold).any()}")
     
+    #Filter slection sort results
+    df_filtered_selection_rec = filter_mt_cells(sorted_df_rec_selection, percent_mito_threshold)
+    print(df_filtered_selection_rec.head())
+    print(f"percent_mito > {percent_mito_threshold} {(df_filtered_selection_rec['percent_mito'] > percent_mito_threshold).any()}")
+    print(f"n_genes < {n_gene_threshold} {(df_filtered_selection_rec['n_genes'] < n_gene_threshold).any()}")
 
 if __name__ == "__main__":
     main()
