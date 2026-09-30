@@ -39,20 +39,25 @@ def main():
         return anndata_obj_filtered
     
     # calling the filtering function with the set values set: example
-    # set the thresholds you want to use for filtering
-    percent_mito_threshold = 0.1 # filter to get those <= 0.1 % mito genes origin
-    n_gene_threshold = 1500 # filter to get those >= 1500 genes expressed
+    # set the thresholds you want to use for filtering (see summary stat line)
+    percent_mito_threshold = 0.03 # filter to get those <= 0.03 % mito genes origin (outliers)
+    n_gene_threshold = 1050 # filter to get those >= 1050 genes expressed
     df_filtered = filter_mt_cells(adata, 
                                   percent_mito_threshold, 
                                   n_gene_threshold
                                   ).obs.copy()
+    # Check summary stats for both columns to know what thresholds to set
+    # print(adata.obs[["percent_mito", "n_genes"]].describe())
+        # choose percent_mito a little just below max to rid outliers
+        # choose n_genes to filter out 25% below threshold
     
     # Validate if filtered correctly: uncoment to validate if needed; dis has been validated
     # print(df_filtered.head())
     # print(f"percent_mito > {percent_mito_threshold} {(df_filtered["percent_mito"] > percent_mito_threshold).any()}")
     # print(f"n_genes < {n_gene_threshold} {(df_filtered["n_genes"] < n_gene_threshold).any()}")
 
-
+    # Check summary stats for both columns to know what threshold to set
+    print(adata.obs[["percent_mito", "n_genes"]].describe())
 
     # # Specify the column to sort by
     # mt_column = df_original.columns[2]
