@@ -142,12 +142,12 @@ def main():
     #Filter insert sort results
     print("Insert Sort Results:")
     df_filtered_insert_rec = filter_mt_cells(sorted_df_rec_insert, percent_mito_threshold)
-    print(df_filtered_selection_rec.tail())
-    print(f"percent_mito > {percent_mito_threshold} {(df_filtered_selection_rec['percent_mito'] > percent_mito_threshold).any()}")
+    print(df_filtered_insert_rec.tail())
+    print(f"percent_mito > {percent_mito_threshold} {(df_filtered_insert_rec['percent_mito'] > percent_mito_threshold).any()}")
 
     df_filtered_insert_iter = filter_mt_cells(sorted_df_iter_insert, percent_mito_threshold)
-    print(df_filtered_selection_rec.tail())
-    print(f"percent_mito > {percent_mito_threshold} {(df_filtered_selection_rec['percent_mito'] > percent_mito_threshold).any()}")
+    print(df_filtered_insert_iter.tail())
+    print(f"percent_mito > {percent_mito_threshold} {(df_filtered_insert_iter['percent_mito'] > percent_mito_threshold).any()}")
 
 
 
