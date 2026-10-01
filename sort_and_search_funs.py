@@ -1,5 +1,9 @@
 import sys
 
+# ---------------------------------------------------------------------------
+# 1. SELECTION SORT
+# ---------------------------------------------------------------------------
+
 def selection_sort_iter(df, column, descending=False):
 
     # Keep track of row positions
@@ -76,6 +80,11 @@ def selection_sort_recursive(
         start + 1,
         order
     )
+
+
+# ---------------------------------------------------------------------------
+# 2. INSERTION SORT
+# ---------------------------------------------------------------------------
 
 # Function to sort array using insertion sort iteratively
 # https://www.geeksforgeeks.org/dsa/insertion-sort-algorithm/
@@ -171,55 +180,77 @@ Each algorithm is implemented in both a recursive and an iterative form.
 
 
 # ---------------------------------------------------------------------------
-# 1. MERGE SORT
+# 3. MERGE SORT
 # ---------------------------------------------------------------------------
 
-def merge(left, right):
-    """Merge two sorted lists into one sorted list."""
+def _merge(df, column, left, right, descending):
+
     result = []
-    i = j = 0
+    i = 0
+    j = 0
+
     while i < len(left) and j < len(right):
-        if left[i] <= right[j]:
+
+        left_value = df.iloc[left[i]][column]
+        right_value = df.iloc[right[j]][column]
+
+        if descending:
+            take_left = left_value >= right_value
+        else:
+            take_left = left_value <= right_value
+
+        if take_left:
             result.append(left[i])
             i += 1
         else:
             result.append(right[j])
             j += 1
-    result.extend(left[i:])
-    result.extend(right[j:])
-    return result
+
+    return result + left[i:] + right[j:]
 
 
-def merge_sort_recursive(arr):
-    """Classic top-down recursive merge sort. O(n log n)."""
-    if len(arr) <= 1:
-        return arr[:]
+def merge_sort_rec(df, column, descending=False):
 
-    mid = len(arr) // 2
-    left = merge_sort_recursive(arr[:mid])
-    right = merge_sort_recursive(arr[mid:])
-    return merge(left, right)
+    def sort(order):
+
+        if len(order) <= 1:
+            return order
+
+        mid = len(order) // 2
+        left = sort(order[:mid])
+        right = sort(order[mid:])
+
+        return _merge(df, column, left, right, descending)
+
+    order = sort(list(range(len(df))))
+
+    #return DataFrame sorted
+    return df.iloc[order].copy()
 
 
-def merge_sort_iterative(arr):
-    """
-    Bottom-up iterative merge sort.
-    Repeatedly merges sorted runs of doubling size (1, 2, 4, 8, ...)
-    instead of recursing.
-    """
-    arr = arr[:]
-    n = len(arr)
+def merge_sort_iter(df, column, descending=False):
+
+    order = list(range(len(df)))
+
+    n = len(order)
+
     width = 1
 
     while width < n:
+
         for start in range(0, n, 2 * width):
-            mid = min(start + width, n)
-            end = min(start + 2 * width, n)
-            merged = merge(arr[start:mid], arr[mid:end])
-            arr[start:end] = merged
+
+            mid = start + width
+            end = start + 2 * width
+
+            order[start:end] = _merge(
+                df, column, order[start:mid], order[mid:end], descending
+            )
+
         width *= 2
 
-    return arr
+    #return DataFrame sorted
+    return df.iloc[order].copy()
 
 
 # ---------------------------------------------------------------------------
