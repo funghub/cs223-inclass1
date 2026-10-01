@@ -44,7 +44,7 @@ def filter_mt_cells(
     # filtering of the df
     return df[
         df["percent_mito"] <= mt_exp_lvl_threshold
-    ].copy()
+        ].copy()
 
 def filter_exp_cells(
     df,           # the ANNdata object
@@ -55,7 +55,7 @@ def filter_exp_cells(
     # filtering of the df
     return df[
         df["n_genes"] >= gene_exp_threshold
-    ].copy()
+        ].copy()
 
 
 # Main
@@ -202,6 +202,7 @@ def main():
     df_filtered_insert_iter = filter_exp_cells(sorted_df_filtered_insertion_iter, n_gene_threshold)
     print(df_filtered_insert_iter.head())
     print(f"n_genes < {n_gene_threshold} {(df_filtered_insert_iter['n_genes'] < n_gene_threshold).any()}")
-    
+
+
 if __name__ == "__main__":
     main()
