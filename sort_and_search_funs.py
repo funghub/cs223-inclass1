@@ -300,7 +300,7 @@ def _quick_partition(df, column, order, low, high, descending):
     return left, right
 
 
-def quick_sort_recursive(df, column, descending=False):
+def quick_sort_rec(df, column, descending=False):
     """Return a recursively quick-sorted copy of a DataFrame."""
     order = list(range(len(df)))
 
@@ -325,7 +325,7 @@ def quick_sort_recursive(df, column, descending=False):
     return df.iloc[order].copy()
 
 
-def quick_sort_iterative(df, column, descending=False):
+def quick_sort_iter(df, column, descending=False):
     """Return an iteratively quick-sorted copy of a DataFrame."""
     order = list(range(len(df)))
 
