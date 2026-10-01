@@ -80,10 +80,10 @@ def main():
     Running Recursive Versions of Sort Algorithms
     '''
     # Run Recursive Insert Sort Experiment
-    # sorted_df_rec_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_recursive)
+    sorted_df_rec_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_recursive, descending=True)
     
     # Run Recursive Selection Sort Experiment  
-    sorted_df_rec_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_recursive, descending=True)
+    # sorted_df_rec_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_recursive, descending=True)
 
     # Run Recursive Merge Sort Experiment
 
@@ -94,7 +94,7 @@ def main():
     Running Iterative Versions of Sort Algorithms
     '''
     # Run Iterative Insert Sort Experiment
-    # sorted_df_iter_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_iter)
+    sorted_df_iter_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_iter, descending=True)
 
     # Run Iterative Selection Sort Experiment
     #sorted_df_iter_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_iter, descending=True)
