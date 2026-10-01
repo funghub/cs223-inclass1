@@ -232,34 +232,34 @@ def main():
     #Filter selection sort results
     print("Selection Sort Recursive Results:")
     print("Recursive:")
-    df_filtered_selection_rec = filter_exp_cells(sorted_df_filtered_selection_rec, n_gene_threshold)
-    print(df_filtered_selection_rec.head())
-    print(f"n_genes < {n_gene_threshold} {(df_filtered_selection_rec['n_genes'] < n_gene_threshold).any()}")
+    df_filtered_selection_rec_col2 = filter_exp_cells(sorted_df_filtered_selection_rec, n_gene_threshold)
+    print(df_filtered_selection_rec_col2.head())
+    print(f"n_genes < {n_gene_threshold} {(df_filtered_selection_rec_col2['n_genes'] < n_gene_threshold).any()}")
 
     print("\nIterative:")
-    df_filtered_selection_iter = filter_exp_cells(sorted_df_filtered_selection_iter, n_gene_threshold)
-    print(df_filtered_selection_iter.head())
-    print(f"n_genes < {n_gene_threshold} {(df_filtered_selection_iter['n_genes'] < n_gene_threshold).any()}")
+    df_filtered_selection_iter_col2 = filter_exp_cells(sorted_df_filtered_selection_iter, n_gene_threshold)
+    print(df_filtered_selection_iter_col2.head())
+    print(f"n_genes < {n_gene_threshold} {(df_filtered_selection_iter_col2['n_genes'] < n_gene_threshold).any()}")
 
 
     #Filter insert sort results
     print("\n\nInsert Sort Results:")
     print("Recursive:")
-    df_filtered_insert_rec = filter_exp_cells(sorted_df_filtered_insertion_rec, n_gene_threshold)
-    print(df_filtered_insert_rec.head())
-    print(f"n_genes < {n_gene_threshold} {(df_filtered_insert_rec['n_genes'] < n_gene_threshold).any()}")
+    df_filtered_insert_rec_col2 = filter_exp_cells(sorted_df_filtered_insertion_rec, n_gene_threshold)
+    print(df_filtered_insert_rec_col2.head())
+    print(f"n_genes < {n_gene_threshold} {(df_filtered_insert_rec_col2['n_genes'] < n_gene_threshold).any()}")
 
     print("\nIterative:")
-    df_filtered_insert_iter = filter_exp_cells(sorted_df_filtered_insertion_iter, n_gene_threshold)
-    print(df_filtered_insert_iter.head())
-    print(f"n_genes < {n_gene_threshold} {(df_filtered_insert_iter['n_genes'] < n_gene_threshold).any()}")
+    df_filtered_insert_iter_col2 = filter_exp_cells(sorted_df_filtered_insertion_iter, n_gene_threshold)
+    print(df_filtered_insert_iter_col2.head())
+    print(f"n_genes < {n_gene_threshold} {(df_filtered_insert_iter_col2['n_genes'] < n_gene_threshold).any()}")
 
     #Filter merge sort results
     print("\nMerge Sort Results:")
     print("Recursive:")
-    df_filtered_merge_rec = filter_exp_cells(sorted_df_filtered_merge_rec, n_gene_threshold)
-    print(df_filtered_merge_rec.head())
-    print(f"n_genes < {n_gene_threshold} {(df_filtered_merge_rec['n_genes'] < n_gene_threshold).any()}")
+    df_filtered_merge_rec_col2 = filter_exp_cells(sorted_df_filtered_merge_rec, n_gene_threshold)
+    print(df_filtered_merge_rec_col2.head())
+    print(f"n_genes < {n_gene_threshold} {(df_filtered_merge_rec_col2['n_genes'] < n_gene_threshold).any()}")
 
     print("\nIterative:")
 
