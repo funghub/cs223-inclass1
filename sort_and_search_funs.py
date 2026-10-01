@@ -254,49 +254,109 @@ def merge_sort_iter(df, column, descending=False):
 # 4. QUICK SORT
 # ---------------------------------------------------------------------------
 
-def _partition(arr, low, high):
-    """Lomuto partition scheme; pivot = last element. Sorts in place."""
-    pivot = arr[high]
-    i = low - 1
-    for j in range(low, high):
-        if arr[j] <= pivot:
-            i += 1
-            arr[i], arr[j] = arr[j], arr[i]
-    arr[i + 1], arr[high] = arr[high], arr[i + 1]
-    return i + 1
+def _quick_partition(df, column, order, low, high, descending):
+    """Three-way partition of DataFrame row positions."""
+    pivot_position = (low + high) // 2
+    pivot_value = df.iloc[order[pivot_position]][column]
+
+    left = low
+    current = low
+    right = high
+
+    while current <= right:
+        current_value = df.iloc[order[current]][column]
+
+        comes_before = (
+            current_value > pivot_value
+            if descending
+            else current_value < pivot_value
+        )
+
+        comes_after = (
+            current_value < pivot_value
+            if descending
+            else current_value > pivot_value
+        )
+
+        if comes_before:
+            order[left], order[current] = (
+                order[current],
+                order[left]
+            )
+            left += 1
+            current += 1
+
+        elif comes_after:
+            order[current], order[right] = (
+                order[right],
+                order[current]
+            )
+            right -= 1
+
+        else:
+            # Equal to the pivot
+            current += 1
+
+    return left, right
 
 
-def quick_sort_recursive(arr, low=0, high=None):
-    """Classic recursive quick sort. Sorts in place. Average O(n log n)."""
-    if high is None:
-        high = len(arr) - 1
+def quick_sort_recursive(df, column, descending=False):
+    """Return a recursively quick-sorted copy of a DataFrame."""
+    order = list(range(len(df)))
 
-    if low < high:
-        pivot_index = _partition(arr, low, high)
-        quick_sort_recursive(arr, low, pivot_index - 1)
-        quick_sort_recursive(arr, pivot_index + 1, high)
+    def quick_sort(low, high):
+        if low >= high:
+            return
 
-    return arr
+        equal_start, equal_end = _quick_partition(
+            df,
+            column,
+            order,
+            low,
+            high,
+            descending
+        )
+
+        quick_sort(low, equal_start - 1)
+        quick_sort(equal_end + 1, high)
+
+    quick_sort(0, len(order) - 1)
+
+    return df.iloc[order].copy()
 
 
-def quick_sort_iterative(arr):
-    """
-    Iterative quick sort using an explicit stack to simulate
-    the recursion. Sorts in place.
-    """
-    if len(arr) <= 1:
-        return arr
+def quick_sort_iterative(df, column, descending=False):
+    """Return an iteratively quick-sorted copy of a DataFrame."""
+    order = list(range(len(df)))
 
-    stack = [(0, len(arr) - 1)]
+    if len(order) <= 1:
+        return df.copy()
+
+    stack = [(0, len(order) - 1)]
 
     while stack:
         low, high = stack.pop()
-        if low < high:
-            pivot_index = _partition(arr, low, high)
-            stack.append((low, pivot_index - 1))
-            stack.append((pivot_index + 1, high))
 
-    return arr
+        if low >= high:
+            continue
+
+        equal_start, equal_end = _quick_partition(
+            df,
+            column,
+            order,
+            low,
+            high,
+            descending
+        )
+
+        if low < equal_start - 1:
+            stack.append((low, equal_start - 1))
+
+        if equal_end + 1 < high:
+            stack.append((equal_end + 1, high))
+
+    return df.iloc[order].copy()
+
 
 
 # ---------------------------------------------------------------------------

@@ -293,6 +293,9 @@ def main():
     df_filtered_quick_iter_col2 = filter_exp_cells(sorted_df_filtered_quick_iter, n_gene_threshold)
     print(df_filtered_quick_iter_col2.head())
     print(f"n_genes < {n_gene_threshold} {(df_filtered_quick_iter_col2['n_genes'] < n_gene_threshold).any()}")
+    df_filtered_quick_iter_col2 = filter_exp_cells(sorted_df_filtered_quick_iter, n_gene_threshold)
+    print(df_filtered_quick_iter_col2.head())
+    print(f"n_genes < {n_gene_threshold} {(df_filtered_quick_iter_col2['n_genes'] < n_gene_threshold).any()}")
 
 
 if __name__ == "__main__":
