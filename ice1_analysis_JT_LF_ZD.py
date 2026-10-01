@@ -80,16 +80,12 @@ def main():
     '''
     Running Recursive Versions of Sort Algorithms
     '''
+    print("\nRecursive Selection Sort by:", mt_column)
     # Run Recursive Insert Sort Experiment
     sorted_df_rec_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_recursive, descending=True)
     
     # Run Recursive Selection Sort Experiment  
-<<<<<<< HEAD
-    # sorted_df_rec_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_recursive, descending=True)
-=======
-    print("\nRecursive Selection Sort by:", mt_column)
     sorted_df_rec_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_recursive, descending=True)
->>>>>>> fd8010db5745284d536a1c4486dff08aa4a74ad4
 
     # Run Recursive Merge Sort Experiment
 
@@ -99,23 +95,17 @@ def main():
     '''
     Running Iterative Versions of Sort Algorithms
     '''
+    print("\nIterative Selection Sort by:", mt_column)
     # Run Iterative Insert Sort Experiment
     sorted_df_iter_insert = run_sort_experiment(df_original, mt_column, sort_func=insertionSort_iter, descending=True)
 
     # Run Iterative Selection Sort Experiment
-    print("\nIterative Selection Sort by:", mt_column)
     sorted_df_iter_selection = run_sort_experiment(df_original, mt_column, sort_func=selection_sort_iter, descending=True)
 
     # Run Iterative Merge Sort Experiment
     
     # Run Iterative Quick Sort Experiment
     
-    
-
-
-
-
-
 
     # 7c
     # using 7a function
@@ -135,35 +125,83 @@ def main():
     # print(f"percent_mito > {percent_mito_threshold} {(df_filtered["percent_mito"] > percent_mito_threshold).any()}")
     # print(f"n_genes < {n_gene_threshold} {(df_filtered["n_genes"] < n_gene_threshold).any()}")
     
+    '''
+    Results for Col3 mt expression
+    '''
     #Filter slection sort results
+    print("Selection Sort Results:")
     df_filtered_selection_rec = filter_mt_cells(sorted_df_rec_selection, percent_mito_threshold)
-    print(df_filtered_selection_rec.head())
+    print(df_filtered_selection_rec.tail())
     print(f"percent_mito > {percent_mito_threshold} {(df_filtered_selection_rec['percent_mito'] > percent_mito_threshold).any()}")
 
     df_filtered_selection_iter = filter_mt_cells(sorted_df_iter_selection, percent_mito_threshold)
-    print(df_filtered_selection_iter.head())
+    print(df_filtered_selection_iter.tail())
     print(f"percent_mito > {percent_mito_threshold} {(df_filtered_selection_iter['percent_mito'] > percent_mito_threshold).any()}")
 
+
+    #Filter insert sort results
+    print("Insert Sort Results:")
+    df_filtered_insert_rec = filter_mt_cells(sorted_df_rec_insert, percent_mito_threshold)
+    print(df_filtered_selection_rec.tail())
+    print(f"percent_mito > {percent_mito_threshold} {(df_filtered_selection_rec['percent_mito'] > percent_mito_threshold).any()}")
+
+    df_filtered_insert_iter = filter_mt_cells(sorted_df_iter_insert, percent_mito_threshold)
+    print(df_filtered_selection_rec.tail())
+    print(f"percent_mito > {percent_mito_threshold} {(df_filtered_selection_rec['percent_mito'] > percent_mito_threshold).any()}")
+
+
+
+    
     #7d
-    #Run the filtered slection sort results to sort by n_genes column Recursively
+    '''
+    Running Recursive Versions of Sort Algorithms
+    '''
     print("\nSelection sort recursively by:", n_genes_column) 
+    #Run the filtered slection sort results to sort by n_genes column Recursively
     sorted_df_filtered_selection_rec = run_sort_experiment(df_filtered_selection_rec, n_genes_column, sort_func=selection_sort_iter, descending=False)
     #Run the filtered merge sort results to sort by n_genes column Recursively
 
     #Run the filtered Quick sort results to sort by n_genes column Recursively
 
     #Run the filtered insertion sort results to sort by n_genes column Recursively
+    sorted_df_filtered_insertion_rec = run_sort_experiment(df_filtered_selection_iter, n_genes_column, sort_func=selection_sort_iter, descending=False)
 
-    #Run the filtered slection sort results to sort by n_genes column Iteratively
+
+    '''
+    Running Iterative Versions of Sort Algorithms
+    '''
     print("\nSelection sort iteratively by:", n_genes_column)
+    #Run the filtered slection sort results to sort by n_genes column Iteratively
     sorted_df_filtered_selection_iter = run_sort_experiment(df_filtered_selection_iter, n_genes_column, sort_func=selection_sort_iter, descending=False)
+    #Run the filtered merge sort results to sort by n_genes column Iteratively
+    
+    #Run the filtered Quick sort results to sort by n_genes column Iteratively
 
+    #Run the filtered insertion sort results to sort by n_genes column Recursively
+    sorted_df_filtered_insertion_iter = run_sort_experiment(df_filtered_selection_iter, n_genes_column, sort_func=selection_sort_iter, descending=False)
+
+
+    '''
+    Results for Col2 number of genes expression
+    '''
     #Filter selection sort results
     df_filtered_selection_rec = filter_exp_cells(sorted_df_filtered_selection_rec, n_gene_threshold)
     print(df_filtered_selection_rec.head())
     print(f"n_genes < {n_gene_threshold} {(df_filtered_selection_rec['n_genes'] < n_gene_threshold).any()}")
+    
     df_filtered_selection_iter = filter_exp_cells(sorted_df_filtered_selection_iter, n_gene_threshold)
     print(df_filtered_selection_iter.head())
     print(f"n_genes < {n_gene_threshold} {(df_filtered_selection_iter['n_genes'] < n_gene_threshold).any()}")
+
+
+    #Filter insert sort results
+    df_filtered_insert_rec = filter_exp_cells(sorted_df_filtered_insertion_rec, n_gene_threshold)
+    print(df_filtered_insert_rec.head())
+    print(f"n_genes < {n_gene_threshold} {(df_filtered_insert_rec['n_genes'] < n_gene_threshold).any()}")
+    
+    df_filtered_insert_iter = filter_exp_cells(sorted_df_filtered_insertion_iter, n_gene_threshold)
+    print(df_filtered_insert_iter.head())
+    print(f"n_genes < {n_gene_threshold} {(df_filtered_insert_iter['n_genes'] < n_gene_threshold).any()}")
+    
 if __name__ == "__main__":
     main()
