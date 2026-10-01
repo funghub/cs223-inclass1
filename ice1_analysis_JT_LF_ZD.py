@@ -133,11 +133,11 @@ def main():
     
     #Filter slection sort results
     df_filtered_selection_rec = filter_mt_cells(sorted_df_rec_selection, percent_mito_threshold)
-    print(df_filtered_selection_rec.tail())
+    print(df_filtered_selection_rec.head())
     print(f"percent_mito > {percent_mito_threshold} {(df_filtered_selection_rec['percent_mito'] > percent_mito_threshold).any()}")
 
     df_filtered_selection_iter = filter_mt_cells(sorted_df_iter_selection, percent_mito_threshold)
-    print(df_filtered_selection_iter.tail())
+    print(df_filtered_selection_iter.head())
     print(f"percent_mito > {percent_mito_threshold} {(df_filtered_selection_iter['percent_mito'] > percent_mito_threshold).any()}")
 
     #7d
