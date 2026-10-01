@@ -84,7 +84,6 @@ def insertionSort_iter(df,
     descending=False,
     ):
     """Sorts a DataFrame by a specified column using an iterative Insertion Sort algorithm with index tracking."""
-    
     order = list(range(len(df)))
 
     for i in range(1, len(order)):
@@ -113,7 +112,7 @@ def insertionSort_iter(df,
         order[j + 1] = key_pos
 
         # Reconstruct DataFrame with original index preserved order
-        return df.iloc[order].copy()
+    return df.iloc[order].copy()
     
 # https://www.geeksforgeeks.org/dsa/recursive-insertion-sort/
 def insertionSort_recursive(df, 
