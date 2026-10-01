@@ -96,7 +96,7 @@ def main():
 
     # Run Recursive Quick Sort Experiment
     print("\nRun quick_sort_recursive():")
-    sorted_df_rec_quick = run_sort_experiment(df_original, mt_column, sort_func=quick_sort_rec, descending=True)
+    sorted_df_rec_quick = run_sort_experiment(df_original, mt_column, sort_func=quick_sort_recursive, descending=True)
 
 
     '''
