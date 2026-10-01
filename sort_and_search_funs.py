@@ -305,45 +305,57 @@ def quick_sort_iterative(arr):
 # 3. BINARY SEARCH
 # ---------------------------------------------------------------------------
 
-def binary_search_recursive(arr, target, low=0, high=None):
+def binary_search_recursive(df, column_name, target, low=0, high=None, descending=False):
     """
-    Recursive binary search on a sorted list.
-    Returns the index of target, or -1 if not found.
+    Recursive binary search on a sorted pandas DataFrame column.
+    
+    Returns the integer position (iloc index) of the matching row, or -1 if not found.
     """
     if high is None:
-        high = len(arr) - 1
+        high = len(df) - 1
 
     if low > high:
         return -1
 
     mid = (low + high) // 2
-    if arr[mid] == target:
+    mid_val = df.iloc[mid][column_name]
+
+    if mid_val == target:
         return mid
-    elif arr[mid] < target:
-        return binary_search_recursive(arr, target, mid + 1, high)
+
+    # Flip comparison direction if the DataFrame is sorted descending
+    is_less = (mid_val < target) if not descending else (mid_val > target)
+
+    if is_less:
+        return binary_search_recursive(df, column_name, target, mid + 1, high, descending)
     else:
-        return binary_search_recursive(arr, target, low, mid - 1)
+        return binary_search_recursive(df, column_name, target, low, mid - 1, descending)
 
 
-def binary_search_iterative(arr, target):
+def binary_search_iterative(df, column_name, target, descending=False):
     """
-    Iterative binary search on a sorted list.
-    Returns the index of target, or -1 if not found.
+    Iterative binary search on a sorted pandas DataFrame column.
+    
+    Returns the integer position (iloc index) of the matching row, or -1 if not found.
     """
-    low, high = 0, len(arr) - 1
+    low, high = 0, len(df) - 1
 
     while low <= high:
         mid = (low + high) // 2
-        if arr[mid] == target:
+        mid_val = df.iloc[mid][column_name]
+
+        if mid_val == target:
             return mid
-        elif arr[mid] < target:
+        
+        # Flip comparison direction if the DataFrame is sorted descending
+        is_less = (mid_val < target) if not descending else (mid_val > target)
+
+        if is_less:
             low = mid + 1
         else:
             high = mid - 1
 
     return -1
-
-
 
 
 
