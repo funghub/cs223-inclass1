@@ -1,89 +1,9 @@
+# coding: utf-8 # <- This is an encoding declaration
+
 import sys
 
 # ---------------------------------------------------------------------------
-# 1. SELECTION SORT
-# ---------------------------------------------------------------------------
-
-def selection_sort_iter(df, column, descending=False):
-
-    # Keep track of row positions
-    order = list(range(len(df)))
-
-    n = len(order)
-
-    for i in range(n - 1):
-
-        selected_idx = i
-
-        for j in range(i + 1, n):
-
-            current_value = df.iloc[order[j]][column]
-            selected_value = df.iloc[order[selected_idx]][column]
-
-            if descending:
-                if current_value > selected_value:
-                    selected_idx = j
-            else:
-                if current_value < selected_value:
-                    selected_idx = j
-
-        # Swap entire row positions
-        order[i], order[selected_idx] = (
-            order[selected_idx],
-            order[i]
-        )
-
-    # Return DataFrame in sorted row order
-    return df.iloc[order].copy()
-
-def selection_sort_recursive(
-    df,
-    column,
-    descending=False,
-    start=0,
-    order=None
-):
-
-    if order is None:
-        order = list(range(len(df)))
-
-    n = len(order)
-
-    # Base case
-    if start >= n - 1:
-        return df.iloc[order].copy()
-
-    selected_idx = start
-
-    for j in range(start + 1, n):
-
-        current_value = df.iloc[order[j]][column]
-        selected_value = df.iloc[order[selected_idx]][column]
-
-        if descending:
-            if current_value > selected_value:
-                selected_idx = j
-        else:
-            if current_value < selected_value:
-                selected_idx = j
-
-    # Swap entire row positions
-    order[start], order[selected_idx] = (
-        order[selected_idx],
-        order[start]
-    )
-
-    return selection_sort_recursive(
-        df,
-        column,
-        descending,
-        start + 1,
-        order
-    )
-
-
-# ---------------------------------------------------------------------------
-# 2. INSERTION SORT
+# 1. INSERTION SORT
 # ---------------------------------------------------------------------------
 
 # Function to sort array using insertion sort iteratively
@@ -172,17 +92,93 @@ def insertionSort_recursive(df,
     # Return reconstructed DataFrame only on the outermost call completion
     return df.iloc[order].copy()
 
-"""
-Merge Sort, Quick Sort, and Binary Search
-Each algorithm is implemented in both a recursive and an iterative form.
-"""
+# ---------------------------------------------------------------------------
+# 2. SELECTION SORT
+# ---------------------------------------------------------------------------
 
+def selection_sort_iter(df, column, descending=False):
+
+    # Keep track of row positions
+    order = list(range(len(df)))
+
+    n = len(order)
+
+    for i in range(n - 1):
+
+        selected_idx = i
+
+        for j in range(i + 1, n):
+
+            current_value = df.iloc[order[j]][column]
+            selected_value = df.iloc[order[selected_idx]][column]
+
+            if descending:
+                if current_value > selected_value:
+                    selected_idx = j
+            else:
+                if current_value < selected_value:
+                    selected_idx = j
+
+        # Swap entire row positions
+        order[i], order[selected_idx] = (
+            order[selected_idx],
+            order[i]
+        )
+
+    # Return DataFrame in sorted row order
+    return df.iloc[order].copy()
+
+def selection_sort_recursive(
+    df,
+    column,
+    descending=False,
+    start=0,
+    order=None
+):
+
+    if order is None:
+        order = list(range(len(df)))
+
+    n = len(order)
+
+    # Base case
+    if start >= n - 1:
+        return df.iloc[order].copy()
+
+    selected_idx = start
+
+    for j in range(start + 1, n):
+
+        current_value = df.iloc[order[j]][column]
+        selected_value = df.iloc[order[selected_idx]][column]
+
+        if descending:
+            if current_value > selected_value:
+                selected_idx = j
+        else:
+            if current_value < selected_value:
+                selected_idx = j
+
+    # Swap entire row positions
+    order[start], order[selected_idx] = (
+        order[selected_idx],
+        order[start]
+    )
+
+    return selection_sort_recursive(
+        df,
+        column,
+        descending,
+        start + 1,
+        order
+    )
 
 # ---------------------------------------------------------------------------
 # 3. MERGE SORT
 # ---------------------------------------------------------------------------
 
-def _merge(df, column, left, right, descending):
+def merge_sort(df, column, left, right, descending):
+    '''merge two lists and returns sorted elements '''
 
     result = []
     i = 0
@@ -209,7 +205,8 @@ def _merge(df, column, left, right, descending):
 
 
 def merge_sort_rec(df, column, descending=False):
-
+    ''' merge sort dataframe recursively, returns sorted DataFrame'''
+    
     def sort(order):
 
         if len(order) <= 1:
@@ -219,7 +216,7 @@ def merge_sort_rec(df, column, descending=False):
         left = sort(order[:mid])
         right = sort(order[mid:])
 
-        return _merge(df, column, left, right, descending)
+        return merge_sort(df, column, left, right, descending)
 
     order = sort(list(range(len(df))))
 
@@ -228,7 +225,8 @@ def merge_sort_rec(df, column, descending=False):
 
 
 def merge_sort_iter(df, column, descending=False):
-
+    '''merge sort dataframe iteratively (using position in the row instead of a value), returns sorted DataFrame'''
+    
     order = list(range(len(df)))
 
     n = len(order)
@@ -242,7 +240,7 @@ def merge_sort_iter(df, column, descending=False):
             mid = start + width
             end = start + 2 * width
 
-            order[start:end] = _merge(
+            order[start:end] = merge_sort(
                 df, column, order[start:mid], order[mid:end], descending
             )
 
@@ -253,7 +251,7 @@ def merge_sort_iter(df, column, descending=False):
 
 
 # ---------------------------------------------------------------------------
-# 2. QUICK SORT
+# 4. QUICK SORT
 # ---------------------------------------------------------------------------
 
 def _partition(arr, low, high):
@@ -302,60 +300,48 @@ def quick_sort_iterative(arr):
 
 
 # ---------------------------------------------------------------------------
-# 3. BINARY SEARCH
+# 5. BINARY SEARCH
 # ---------------------------------------------------------------------------
 
-def binary_search_recursive(df, column_name, target, low=0, high=None, descending=False):
+def binary_search_recursive(arr, target, low=0, high=None):
     """
-    Recursive binary search on a sorted pandas DataFrame column.
-    
-    Returns the integer position (iloc index) of the matching row, or -1 if not found.
+    Recursive binary search on a sorted list.
+    Returns the index of target, or -1 if not found.
     """
     if high is None:
-        high = len(df) - 1
+        high = len(arr) - 1
 
     if low > high:
         return -1
 
     mid = (low + high) // 2
-    mid_val = df.iloc[mid][column_name]
-
-    if mid_val == target:
+    if arr[mid] == target:
         return mid
-
-    # Flip comparison direction if the DataFrame is sorted descending
-    is_less = (mid_val < target) if not descending else (mid_val > target)
-
-    if is_less:
-        return binary_search_recursive(df, column_name, target, mid + 1, high, descending)
+    elif arr[mid] < target:
+        return binary_search_recursive(arr, target, mid + 1, high)
     else:
-        return binary_search_recursive(df, column_name, target, low, mid - 1, descending)
+        return binary_search_recursive(arr, target, low, mid - 1)
 
 
-def binary_search_iterative(df, column_name, target, descending=False):
+def binary_search_iterative(arr, target):
     """
-    Iterative binary search on a sorted pandas DataFrame column.
-    
-    Returns the integer position (iloc index) of the matching row, or -1 if not found.
+    Iterative binary search on a sorted list.
+    Returns the index of target, or -1 if not found.
     """
-    low, high = 0, len(df) - 1
+    low, high = 0, len(arr) - 1
 
     while low <= high:
         mid = (low + high) // 2
-        mid_val = df.iloc[mid][column_name]
-
-        if mid_val == target:
+        if arr[mid] == target:
             return mid
-        
-        # Flip comparison direction if the DataFrame is sorted descending
-        is_less = (mid_val < target) if not descending else (mid_val > target)
-
-        if is_less:
+        elif arr[mid] < target:
             low = mid + 1
         else:
             high = mid - 1
 
     return -1
+
+
 
 
 
